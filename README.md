@@ -236,5 +236,4 @@ http://courses.missouristate.edu/kenvollmar/mars/
 5. Wikibooks. (29 de mayo de 2024). *MIPS Assembly/Register File*. Wikibooks, The Free Textbook Project. https://en.wikibooks.org/wiki/MIPS_Assembly/Register_File
    
 
-    li $v0, 10               # finalización limpia del programa
-    syscall
+
