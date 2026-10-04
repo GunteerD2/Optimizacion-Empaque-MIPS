@@ -170,29 +170,6 @@ documentacion/reporte_proyecto.pdf
 
 ---
 
-## Estructura del repositorio
-
-```text
-Optimizacion-Empaque-MIPS/
-│
-├── README.md
-│
-├── version_base/
-│   └── programa_base.s
-│
-├── version_final/
-│   └── programa_final.s
-│
-├── evidencias/
-│   ├── codigo.png
-│   ├── registros.png
-│   └── resultado.png
-│
-└── documentacion/
-    └── reporte_proyecto.pdf
-```
-
----
 
 ## Bibliografía
 
