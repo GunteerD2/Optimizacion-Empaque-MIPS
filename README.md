@@ -11,11 +11,11 @@
 
 ### Escenario
 
-Una empresa tiene productos que deben colocarse en cajas de igual capacidad, teniendo una cantidad inicial de productos (125 unidades) y una capacidad máxima fijada por caja (12 unidades). El problema reside en que no todas las cajas quedan completas al ser empacadas. La solución consiste en calcular y separar el número de cajas completas de los productos sobrantes, imprimiendo en pantalla la cantidad de productos sin empacar.
+Una empresa tiene productos que deben colocarse en cajas de igual capacidad, teniendo una cantidad inicial de productos (125 productos) y de capacidad por caja (12 unidades). El problema reside en que no todas las cajas están completas, y la manera de solucionarlo es separando las cajas completas de los productos que sobran e imprimiendo la cantidad de productos sobrantes.
 
 ### Resultado
 
-El programa debe calcular el cociente entero (cajas completas) y el residuo (productos sobrantes) a partir de los datos almacenados en memoria. Posteriormente, debe evaluar mediante un salto condicional si existen sobrantes: si los hay, muestra el mensaje `"Productos sin empacar: "` seguido del valor del residuo (`5`); en caso contrario, imprime `"Empaque completo"`. Además, actualiza los resultados correspondientes en la memoria de datos.
+El programa calcula de manera automatizada el número de cajas completas empaquetadas (10 cajas) y determina la cantidad sobrante de productos sin empacar (5 productos). Además, verifica mediante una comparación lógica si la cantidad inicial de productos equivale a la capacidad de las cajas. Finalmente, evalúa mediante un salto condicional si existen sobrantes e imprime por pantalla el mensaje correspondiente con la cantidad de productos sin empacar o el mensaje de empaque completo.
 
 ---
 
@@ -23,38 +23,98 @@ El programa debe calcular el cociente entero (cajas completas) y el residuo (pro
 
 ### Datos del programa
 
+Identificación de los datos proporcionados y almacenados en memoria dentro del escenario planteado:
+
 | Dato | Valor inicial | Propósito |
 |---|---:|---|
-| Dato 1 (`dato1`) | `125` | Almacena la cantidad total de productos a empacar. |
-| Dato 2 (`dato2`) | `12` | Almacena la capacidad máxima de cada caja. |
-| Resultado 1 (`resultado1`) | `0` | Reservado en memoria para guardar las cajas completas calculadas (`10`). |
-| Resultado 2 (`resultado2`) | `0` | Reservado en memoria para guardar la cantidad de productos sobrantes (`5`). |
-| Resultado 3 (`resultado3`) | `0` | Reservado para indicar si coincide exactamente productos y capacidad (`0` = Falso). |
+| `dato1` | 125 | Representa la cantidad total de productos a empaquetar. |
+| `dato2` | 12 | Representa la capacidad máxima de cada caja. |
+| `resultado1` | 0 | Almacena el número de cajas completas calculadas. |
+| `resultado2` | 0 | Almacena la cantidad de productos sobrantes. |
+| `resultado3` | 0 | Almacena la verificación de equivalencia entre productos y capacidad (1 = Verdadero, 0 = Falso). |
 
 ### Operaciones requeridas
 
+Relación de las operaciones necesarias para resolver el escenario con sus correspondientes instrucciones MIPS:
+
 | Datos / Resultados | Propósito | Operación requerida | Instrucción MIPS |
 |---|---|---|---|
-| Dato 1 | Cargar la cantidad de productos desde memoria | Carga | `lw` |
-| Dato 2 | Cargar la capacidad por caja desde memoria | Carga | `lw` |
-| Resultado 1 | Calcular la cantidad de cajas completas (125 / 12) | División entera | `div` |
-| Resultado 2 | Calcular los productos sobrantes sin empacar (125 % 12)[cite: 12, 15] | Residuo / Módulo[cite: 12, 15] | `rem`[cite: 12, 15] |
-| Resultado 3 | Verificar si la cantidad de productos coincide con la capacidad[cite: 12, 15] | Comparación de igualdad[cite: 12, 15] | `seq`[cite: 12, 15] |
-| Almacenamiento | Guardar los resultados calculados de vuelta en la memoria[cite: 12, 15] | Almacenamiento[cite: 12, 15] | `sw`[cite: 12, 15] |
-| Control de flujo | Evaluar si existen productos sobrantes (residuo != 0)[cite: 12, 15] | Salto condicional[cite: 12, 15] | `bne`[cite: 12, 15] |
-| Salida por consola | Imprimir texto y valores enteros en pantalla[cite: 12, 15] | Llamada al sistema[cite: 12, 15] | `syscall`[cite: 12, 15] |
+| `dato1` | Cargar cantidad de productos desde memoria al registro `$t0` | Carga | `lw` |
+| `dato2` | Cargar capacidad de caja desde memoria al registro `$t1` | Carga | `lw` |
+| `Resultado 1` | Calcular el número de cajas completas empaquetadas (`$t0 / $t1`) | División | `div` |
+| `Resultado 2` | Calcular la cantidad de productos sobrantes sin empacar (`$t0 % $t1`) | Residuo | `rem` |
+| `Resultado 3` | Verificar si productos y capacidad son equivalentes (`$t0 == $t1`) | Comparación | `seq` |
+| `resultado1`, `2`, `3` | Guardar resultados obtenidos desde registros hacia la memoria | Almacenamiento | `sw` |
+| Control de flujo | Evaluar si existe residuo (`$t3 != 0`) para saltar a impresión de sobrantes | Salto condicional | `bne` |
+| Impresión | Mostrar mensajes de salida y valores numéricos en la consola | Llamadas al sistema | `syscall` |
 
 ---
 
 ## Implementación
 
-El código está completo, comentado e implementado en ensamblador MIPS[cite: 12, 15].
+El código ensamblador MIPS fue desarrollado y probado de manera funcional en el simulador Mipsy.
 
 ### Versión base
 
-La carpeta `version_base/` contiene la plantilla y el programa inicial proporcionado como punto de partida[cite: 12, 15].
+La carpeta `version_base/` contiene el programa inicial utilizado como punto de partida.
 
-**Archivo:**
+**Archivo:** `version_base/programa_base.s`
 
-```text
-version_base/programa_base.s
+### Versión final
+
+La carpeta `version_final/` contiene la solución optimizada y documentada.
+
+**Archivo:** `version_final/programa_final.s`
+
+**Código fuente MIPS:**
+
+```assembly
+.data
+    dato1:                   .word 125                           # productos
+    dato2:                   .word 12                            # capacidad
+    resultado1:              .word 0                             # cajas completas
+    resultado2:              .word 0                             # producto sobrante 
+    resultado3:              .word 0                             # coincidencia entre cajas y productos
+    mensaje_productosresiduo:.asciiz "Productos sin empacar: "  # mensaje productos sobrantes
+    mensaje_productoscom:    .asciiz "Empaque completo"          # mensaje empaque completo
+
+.text
+.globl main
+
+main:
+    # Carga de datos desde memoria
+    lw $t0, dato1            # cargamos la cantidad de productos en $t0
+    lw $t1, dato2            # cargamos la capacidad de las cajas en $t1
+
+    # Operaciones aritméticas y lógicas
+    div $t2, $t0, $t1        # operacion para calcular cajas completas
+    rem $t3, $t0, $t1        # operacion para calcular el sobrante de los productos
+    seq $t4, $t0, $t1        # pregunta si coinciden los productos y las cajas
+
+    # Almacenamiento de resultados en memoria
+    sw $t2, resultado1       # guardamos la cantidad de cajas completas
+    sw $t3, resultado2       # guardamos la cantidad de producto sobrante
+    sw $t4, resultado3       # guardamos coincidencia (0 o 1)
+
+    # Control de flujo e impresión
+    bne $t3, $zero, sobrante # si residuo != 0 salta a la etiqueta sobrante
+
+    # Impresión si el empaque está completo (residuo == 0)
+    li $v0, 4                # syscall 4: imprimir cadena de texto
+    la $a0, mensaje_productoscom
+    syscall
+    
+    li $v0, 10               # finalización limpia del programa
+    syscall
+
+sobrante:
+    li $v0, 4                # syscall 4: imprimir cadena de texto
+    la $a0, mensaje_productosresiduo
+    syscall
+
+    li $v0, 1                # syscall 1: imprimir entero
+    add $a0, $t3, $zero      # movemos la cantidad sobrante ($t3) a $a0
+    syscall
+
+    li $v0, 10               # finalización limpia del programa
+    syscall
