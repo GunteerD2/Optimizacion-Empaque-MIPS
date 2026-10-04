@@ -234,8 +234,7 @@ http://courses.missouristate.edu/kenvollmar/mars/
 4. Wikibooks. (17 de septiembre de 2023). *MIPS Assembly/Instruction Formats*. Wikibooks, The Free Textbook Project. https://en.wikibooks.org/wiki/MIPS_Assembly/Instruction_Formats
 
 5. Wikibooks. (29 de mayo de 2024). *MIPS Assembly/Register File*. Wikibooks, The Free Textbook Project. https://en.wikibooks.org/wiki/MIPS_Assembly/Register_File
-    add $a0, $t3, $zero      # movemos la cantidad sobrante ($t3) a $a0
-    syscall
+   
 
     li $v0, 10               # finalización limpia del programa
     syscall
