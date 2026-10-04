@@ -52,19 +52,24 @@ Relación de las operaciones necesarias para resolver el escenario con sus corre
 
 ## Implementación
 
-El código ensamblador MIPS fue desarrollado y probado de manera funcional en el simulador Mipsy.
+El código ensamblador MIPS fue desarrollado y probado de manera funcional en el simulador.
 
 ### Versión base
 
 La carpeta `version_base/` contiene el programa inicial utilizado como punto de partida.
 
-**Archivo:** `version_base/programa_base.s`
+**Archivo:**
+`version_base/programa_base.s`
+
+**Descripción del estado inicial:**  
+Estructura inicial donde se definen las etiquetas base en el segmento `.data` y el esqueleto de la función principal en `.text`.
 
 ### Versión final
 
 La carpeta `version_final/` contiene la solución optimizada y documentada.
 
-**Archivo:** `version_final/programa_final.s`
+**Archivo:**
+`version_final/programa_final.s`
 
 **Código fuente MIPS:**
 
@@ -113,6 +118,122 @@ sobrante:
     syscall
 
     li $v0, 1                # syscall 1: imprimir entero
+    add $a0, $t3, $zero      # movemos la cantidad sobrante ($t3) a $a0
+    syscall
+
+    li $v0, 10               # finalización limpia del programa
+    syscall
+```
+
+---
+
+## Evidencias de ejecución
+
+### Código
+
+![Código MIPS](evidencias/codigo.png)
+
+**Descripción:**  
+Estructura general del código fuente cargado en la interfaz del simulador Mipsy Web.
+
+### Registros
+
+![Registros](evidencias/registros.png)
+
+**Descripción:**  
+Inspección del segmento de datos (`.data`) en memoria y valor asignado a los registros tras la ejecución. Los registros `$t0` y `$t1` contienen los datos de entrada (125 y 12), `$t2` almacena las 10 cajas completas, `$t3` el residuo de 5 productos y `$t4` el estado de comparación (0).
+
+### Resultado
+
+![Resultado del programa](evidencias/resultado.png)
+
+**Descripción:**  
+Salida final por consola en la sección I/O mostrando el mensaje `"Productos sin empacar: 5"` y la finalización exitosa con código de salida 0.
+
+---
+
+## Conclusiones
+
+- **Procesamiento a bajo nivel:** A través del desarrollo del proyecto se comprendió de forma práctica la lógica de procesamiento a nivel de arquitectura de computadores, observando cómo las instrucciones de un conjunto de instrucciones (ISA) MIPS interactúan directamente con la memoria y el conjunto de registros.
+- **Manejo de flujo de control:** Se fortaleció la capacidad de abstracción de problemas reales en código ensamblador, afianzando la importancia del manejo adecuado de llamadas al sistema (`syscall`), transferencias de datos (`lw`/`sw`) y saltos condicionales (`bne`) para construir ejecuciones estructuradas.
+- **Resolución de problemas:** La experiencia permitió resolver de forma limpia la división lógica entre cociente y residuo utilizando instrucciones dedicadas (`div` y `rem`), garantizando un empaquetado exacto de mercancías con reporte de excedentes.
+
+---
+
+## Documentación
+
+El reporte completo del proyecto en formato PDF se encuentra almacenado en:
+
+```text
+documentacion/reporte_proyecto.pdf
+```
+
+---
+
+## Estructura del repositorio
+
+```text
+Optimizacion-Empaque-MIPS/
+│
+├── README.md
+│
+├── version_base/
+│   └── programa_base.s
+│
+├── version_final/
+│   └── programa_final.s
+│
+├── evidencias/
+│   ├── codigo.png
+│   ├── registros.png
+│   └── resultado.png
+│
+└── documentacion/
+    └── reporte_proyecto.pdf
+```
+
+---
+
+## Bibliografía
+
+Registre las fuentes utilizadas para comprender las instrucciones MIPS, el funcionamiento del simulador y cualquier otro concepto empleado durante el desarrollo.
+
+Las referencias deben presentarse utilizando **normas APA, séptima edición**.
+
+### Ejemplos
+
+#### Página web
+
+```text
+University of New South Wales. (n.d.). MIPS instruction set.
+https://cgi.cse.unsw.edu.au/~cs1521/current/resources/mips-guide.html
+```
+
+#### Libro
+
+```text
+Patterson, D. A., & Hennessy, J. L. (2021). Computer organization 
+and design: The hardware/software interface (6th ed.). Morgan Kaufmann.
+```
+
+#### Documentación de software
+
+```text
+MARS. (n.d.). MIPS Assembler and Runtime Simulator.
+http://courses.missouristate.edu/kenvollmar/mars/
+```
+
+### Referencias utilizadas
+
+1. Patterson, D. A., & Hennessy, J. L. (2014). *Computer Organization and Design: The Hardware/Software Interface* (5th ed., pp. 62–66). Morgan Kaufmann.
+
+2. Sánchez, C. (24 de enero de 2020). *Citas APA*. Normas APA. https://normas-apa.org/citas/
+
+3. School of Computer Science and Engineering, UNSW Sydney. (2026). *COMP1521 — MIPS Instruction Set Reference & Mipsy Web*. University of New South Wales. https://cgi.cse.unsw.edu.au/~cs1521/current/resources/mips-guide.html#registers
+
+4. Wikibooks. (17 de septiembre de 2023). *MIPS Assembly/Instruction Formats*. Wikibooks, The Free Textbook Project. https://en.wikibooks.org/wiki/MIPS_Assembly/Instruction_Formats
+
+5. Wikibooks. (29 de mayo de 2024). *MIPS Assembly/Register File*. Wikibooks, The Free Textbook Project. https://en.wikibooks.org/wiki/MIPS_Assembly/Register_File
     add $a0, $t3, $zero      # movemos la cantidad sobrante ($t3) a $a0
     syscall
 
